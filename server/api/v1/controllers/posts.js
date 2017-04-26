@@ -7,6 +7,8 @@ const Post = require("./../schemas/posts");
 
 exports.params = (req, res, next, id) => {
     Post.findById(id)
+        .populate("author categories")
+        .exec()
         .then( post => {
             if (post) {
                 req.post = post;
@@ -24,6 +26,8 @@ exports.params = (req, res, next, id) => {
 
 exports.all = (req, res, next) => {
     Post.find()
+        .populate("author categories")
+        .exec()
         .then( posts => {
             res.json(posts);
         })
